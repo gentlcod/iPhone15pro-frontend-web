@@ -1,4 +1,4 @@
-import { useGSAP } from "@gsap/react"
+import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ModelView from "./ModelView";
 import { useEffect, useRef, useState } from "react";
@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
 import { models, sizes } from "../constants";
-// import { animateWithGsapTimeline } from "../utils/animations";
+import { animateWithGsapeTimeline } from "../utils/animations";
 
 const Model = () => {
   const [size, setSize] = useState('small');
@@ -15,7 +15,7 @@ const Model = () => {
     title: 'iPhone 15 Pro in Natural Titanium',
     color: ['#8F8A81', '#FFE7B9', '#6F6C64'],
     img: yellowImg,
-  })
+  });
 
   // camera control for the model view
   const cameraControlSmall = useRef();
@@ -29,26 +29,40 @@ const Model = () => {
   const [smallRotation, setSmallRotation] = useState(0);
   const [largeRotation, setLargeRotation] = useState(0);
 
-  const tl = gsap.timeline();
+  const tl = gsap.timeline(); // tl = timeline
 
-//   useEffect(() => {
-//     if(size === 'large') {
-//       animateWithGsapTimeline(tl, small, smallRotation, '#view1', '#view2', {
-//         transform: 'translateX(-100%)',
-//         duration: 2
-//       })
-//     }
+  useEffect(() => {
+    if (size === 'large') {
+      animateWithGsapeTimeline(
+        tl,
+        large, // Pass `large` ref here
+        largeRotation,
+        '#view1',
+        '#view2',
+        {
+          transform: 'translateX(-100%)',
+          duration: 2
+        }
+      );
+    }
 
-//     if(size ==='small') {
-//       animateWithGsapTimeline(tl, large, largeRotation, '#view2', '#view1', {
-//         transform: 'translateX(0)',
-//         duration: 2
-//       })
-//     }
-//   }, [size])
+    if (size === 'small') {
+      animateWithGsapeTimeline(
+        tl,
+        small, // Pass `small` ref here
+        smallRotation,
+        '#view1',
+        '#view2',
+        {
+          transform: 'translateX(0)',
+          duration: 2
+        }
+      );
+    }
+  }, [size, smallRotation, largeRotation, tl]);
 
   useGSAP(() => {
-    gsap.to('#heading', { y: 0, opacity: 1 })
+    gsap.to('#heading', { y: 0, opacity: 1 });
   }, []);
 
   return (
@@ -60,7 +74,7 @@ const Model = () => {
 
         <div className="flex flex-col items-center mt-5">
           <div className="w-full h-[75vh] md:h-[90vh] overflow-hidden relative">
-            <ModelView 
+            <ModelView
               index={1}
               groupRef={small}
               gsapType="view1"
@@ -68,9 +82,9 @@ const Model = () => {
               setRotationState={setSmallRotation}
               item={model}
               size={size}
-            />  
+            />
 
-            <ModelView 
+            <ModelView
               index={2}
               groupRef={large}
               gsapType="view2"
@@ -108,7 +122,7 @@ const Model = () => {
 
               <button className="size-btn-container">
                 {sizes.map(({ label, value }) => (
-                  <span key={label} className="size-btn" style={{ backgroundColor: size === value ? 'white' : 'transparent', color: size === value ? 'black' : 'white'}} onClick={() => setSize(value)}>
+                  <span key={label} className="size-btn" style={{ backgroundColor: size === value ? 'white' : 'transparent', color: size === value ? 'black' : 'white' }} onClick={() => setSize(value)}>
                     {label}
                   </span>
                 ))}
@@ -118,7 +132,7 @@ const Model = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Model
+export default Model;
