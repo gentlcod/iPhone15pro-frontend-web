@@ -33,6 +33,7 @@ const Navbar = () => {
         alt="search" 
         width={18}
         height={18}
+        className='cursor-pointer'
         />
 
         <img 
@@ -40,6 +41,8 @@ const Navbar = () => {
         alt="bag" 
         width={18}
         height={18}
+        className='cursor-pointer'
+
         />
       </div>
     </nav>
